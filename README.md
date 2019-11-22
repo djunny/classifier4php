@@ -33,7 +33,7 @@ define('EXE_WORD2VEC', 'word2vec.exe');
 系统自带了基于 windows 的 word2vec 版本。
 
 
-### 项目实例1: run.php
+### 项目实例1: demo1/run.php
 
 项目中写了一个将小说自动训练并归类为：现代和古代的例子。
 
@@ -41,7 +41,14 @@ define('EXE_WORD2VEC', 'word2vec.exe');
 
 您可以直接将要识别的小说文件放至 source_target 中，即可自动识别。
 
-### 项目实例2: news.php
+### 项目实例2: demo2/index.php
+
+请用浏览器访问，截图：
+
+![截图1](https://gitee.com/mz/classifier4php/raw/master/screen_1.png "截图1")
+
+![截图2](https://gitee.com/mz/classifier4php/raw/master/screen_2.png "截图2")
+
 
 本实例是经过千万数据集训练出来的结果，
 
