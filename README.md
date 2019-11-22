@@ -48,6 +48,17 @@ define('EXE_WORD2VEC', 'word2vec.exe');
 
 您可以直接将要识别的小说文件放至 source_target 中，即可自动识别。
 
+
+## 运行方式
+ 
+配置 PHP 路径到系统环境变量 PATH 中，或者手工执行：
+
+/path/php run.php > run.log
+
+即可在 run.log 中看到运行结果。
+
+注：windows 下，设置好 PATH 后，也可以直接运行 run.bat
+
 ### 项目实例2: demo2/index.php
 
 请用浏览器访问，截图：
@@ -178,13 +189,3 @@ define('EXE_WORD2VEC', 'word2vec.exe');
 可通过浏览器访问 demo2/index.php
 
 
-
-### 运行方式
-
-配置 PHP 路径到系统环境变量 PATH 中，或者手工执行：
-
-/path/php run.php > run.log
-
-即可在 run.log 中看到运行结果。
-
-注：windows 下，设置好 PATH 后，也可以直接运行 run.bat
