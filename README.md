@@ -4,6 +4,13 @@
 
 分词组件用的是 PhpAnalysis，简单灵活。欢迎大家一起优化并完善。 
 
+
+项目地址：
+
+码云: [https://gitee.com/mz/classifier4php](https://gitee.com/mz/classifier4php)
+
+Github: [https://github.com/djunny/classifier4php](https://github.com/djunny/classifier4php)
+
 ### 背景
 
 每个搜索引擎其实都有一套完善的分类器，拿最简单的分类器举例，
