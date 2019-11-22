@@ -6,40 +6,40 @@
  */
 
 error_reporting(E_ERROR);
-// ¶¨Òå word2vec Â·¾¶
+// å®šä¹‰ word2vec è·¯å¾„
 define('EXE_WORD2VEC', 'word2vec.exe');
 
-// ¼ÓÔØÀà¿â
-include 'include/phpanalysis.class.php';
-include 'include/encoding.class.php';
-include 'include/func.php';
+// åŠ è½½ç±»åº“
+include '../include/phpanalysis.class.php';
+include '../include/encoding.class.php';
+include '../include/func.php';
 
-// ¿ªÊ¼´ÓÑù±¾ÖĞÈ¡ÑµÁ·¼¯
+// å¼€å§‹ä»æ ·æœ¬ä¸­å–è®­ç»ƒé›†
 train();
 
 /**
- * ÑµÁ·ÍêÒÔºó£¬ÎÒÃÇĞèÒª°ÑÑµÁ·ºÃµÄ½á¹û¹éÀà¡£
+ * è®­ç»ƒå®Œä»¥åï¼Œæˆ‘ä»¬éœ€è¦æŠŠè®­ç»ƒå¥½çš„ç»“æœå½’ç±»ã€‚
  *
- * ÀıÈç£¬ÎÒÃÇÑµÁ·ÁËĞ¡Ëµ¹Å´úºÍÏÖ´úµÄ½á¹û¼¯£º
+ * ä¾‹å¦‚ï¼Œæˆ‘ä»¬è®­ç»ƒäº†å°è¯´å¤ä»£å’Œç°ä»£çš„ç»“æœé›†ï¼š
  *
- * source/¹Å´ú.txt
- * source/ÏÖ´ú.txt
+ * source/å¤ä»£.txt
+ * source/ç°ä»£.txt
  *
- * ÄÇÃ´£¬ÎÒÃÇ °Ñ"Ğ¡ËµÄê´ú" ÒëÎª age£¬´ò¿ª source_data Ä¿Â¼
+ * é‚£ä¹ˆï¼Œæˆ‘ä»¬ æŠŠ"å°è¯´å¹´ä»£" è¯‘ä¸º ageï¼Œæ‰“å¼€ source_data ç›®å½•
  *
- * ½¨Á¢Ò»¸ö age Ä¿Â¼£¬
+ * å»ºç«‹ä¸€ä¸ª age ç›®å½•ï¼Œ
  *
- * È»ºó°Ñ¹Å´ú.txt ºÍ ÏÖ´ú.txt Á½¸ö ÎÄ¼ş±£´æÔÚ age Ä¿Â¼
+ * ç„¶åæŠŠå¤ä»£.txt å’Œ ç°ä»£.txt ä¸¤ä¸ª æ–‡ä»¶ä¿å­˜åœ¨ age ç›®å½•
  *
- * ´ËÊ±£¬±ã¿ÉÒÔ¿ªÊ¼²âÊÔÊ¶±ğ½á¹û
+ * æ­¤æ—¶ï¼Œä¾¿å¯ä»¥å¼€å§‹æµ‹è¯•è¯†åˆ«ç»“æœ
  */
 
-// ¿ªÊ¼´Ó source_data ÖĞÈ¡ÑµÁ·½á¹û£¬ source_target Ä¿Â¼ÖĞÈ¡ÒªÊ¶±ğµÄÊı¾İ
+// å¼€å§‹ä» source_data ä¸­å–è®­ç»ƒç»“æœï¼Œ source_target ç›®å½•ä¸­å–è¦è¯†åˆ«çš„æ•°æ®
 analysis('source_target/', 'source_data/');
 
 /**
- * Ñù±¾Êı¾İËùÔÚÄ¿Â¼£¬Ã¿Ò»¸ö·ÖÀàÎªÒ»¸ö×ÓÄ¿Â¼
- * Èç¹ûĞèÒªÖØĞÂÑµÁ·£¬ÇëÉ¾³ı source ¸ùÄ¿Â¼ÏÂ µÄ log ºÍ txt
+ * æ ·æœ¬æ•°æ®æ‰€åœ¨ç›®å½•ï¼Œæ¯ä¸€ä¸ªåˆ†ç±»ä¸ºä¸€ä¸ªå­ç›®å½•
+ * å¦‚æœéœ€è¦é‡æ–°è®­ç»ƒï¼Œè¯·åˆ é™¤ source æ ¹ç›®å½•ä¸‹ çš„ log å’Œ txt
  *
  * @param string $source_dir
  */
@@ -47,57 +47,57 @@ function train($source_dir = 'source/') {
     //
     $cmd_exe = EXE_WORD2VEC;
 
-    // ¼ÓÈëÒ»Ğ©Ã»ÓĞÓÃµÄ´ÊÆµ
+    // åŠ å…¥ä¸€äº›æ²¡æœ‰ç”¨çš„è¯é¢‘
     $unuse_data = file('unuse.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     $unuse_data = array_flip($unuse_data);
 
-    // ÔØÈëÄ¿Â¼ÏÂËùÓĞÄ¿Â¼
+    // è½½å…¥ç›®å½•ä¸‹æ‰€æœ‰ç›®å½•
     $dirs = array_diff(scandir($source_dir), array('..', '.'));
     foreach ($dirs as $dir) {
         $type_dir = $source_dir . $dir . '/';
         if (!is_dir($type_dir)) {
             continue;
         }
-        // ËÑË÷µ±Ç°Ä¿Â¼ÏÂËùÓĞÎÄ¼ş
+        // æœç´¢å½“å‰ç›®å½•ä¸‹æ‰€æœ‰æ–‡ä»¶
         $files = array_diff(scandir($type_dir), array('..', '.'));
         $source_file = $source_dir . '_' . $dir . '.log';
-        // Èç¹ûÑµÁ· log ÒÑ¾­´æÔÚ£¬ÄÇÃ´ÍË³ö
+        // å¦‚æœè®­ç»ƒ log å·²ç»å­˜åœ¨ï¼Œé‚£ä¹ˆé€€å‡º
         if (!$files || is_file($source_file)) {
-            l('Ìø¹ıÑµÁ·, LogÎÄ¼ş´æÔÚ', $dir);
+            l('è·³è¿‡è®­ç»ƒ, Logæ–‡ä»¶å­˜åœ¨', $dir);
             continue;
         }
-        // Çå¿ÕÀúÊ·ÎÄ¼ş
+        // æ¸…ç©ºå†å²æ–‡ä»¶
         file_put_contents($source_file, '');
         foreach ($files as $file) {
-            // ÑµÁ·ÍêºóµÄ½á¹û±£´æÎÄ¼ş
+            // è®­ç»ƒå®Œåçš„ç»“æœä¿å­˜æ–‡ä»¶
             $out_file = $source_dir . $dir . '.txt';
             $out = $return = '';
             if (is_file($out_file)) {
-                l('Ìø¹ıÑµÁ·, ½á¹ûÎÄ¼ş´æÔÚ', $dir);
+                l('è·³è¿‡è®­ç»ƒ, ç»“æœæ–‡ä»¶å­˜åœ¨', $dir);
                 continue;
             }
-            // ´ò¿ªµ±Ç°ÎÄ¼ş
+            // æ‰“å¼€å½“å‰æ–‡ä»¶
             $lines = file($type_dir . $file);
-            // ¹ıÂËÖØ¸´ĞĞ
+            // è¿‡æ»¤é‡å¤è¡Œ
             $lines = array_flip(array_flip($lines));
             $count = count($lines);
             $content = '';
-            // ********* ÕâÀïÊÓ¾ßÌåÒµÎñ¶ø¶¨ ********
-            // È¡Ç° 1000ĞĞ
+            // ********* è¿™é‡Œè§†å…·ä½“ä¸šåŠ¡è€Œå®š ********
+            // å–å‰ 1000è¡Œ
             for ($i = 0; $i < min(1000, $count); $i++) {
                 $content .= $lines[$i];
             }
-            // ×ª utf8 ±àÂë
+            // è½¬ utf8 ç¼–ç 
             $content = encoding::iconv($content);
-            // ·Ö´Ê£¬¸ù¾İ´ÊĞÔÈ¡»Ø½á¹û
+            // åˆ†è¯ï¼Œæ ¹æ®è¯æ€§å–å›ç»“æœ
             $tags = get_trans_data($content);
-            // ¹ıÂËÎŞÓÃ´Ê
+            // è¿‡æ»¤æ— ç”¨è¯
             foreach ($tags as $index => $tag) {
                 if (isset($unuse_data[$tag])) {
                     unset($tags[$index]);
                 }
             }
-            // ±£´æ
+            // ä¿å­˜
             if ($tags) {
                 $fp = fopen($source_file, 'a+');
                 fwrite($fp, implode(" ", $tags) . " ");
@@ -105,7 +105,7 @@ function train($source_dir = 'source/') {
             }
         }
 
-        // µ÷ÓÃ word2vec À´·ÖÀà
+        // è°ƒç”¨ word2vec æ¥åˆ†ç±»
         $run_cmd = "%exe% -train %in% -output %out% -cbow 0 -size 200 -window 5 -negative 0 -hs 1 -sample 1e-3 -threads 16 -classes 500";
         $run_cmd = str_replace('%exe%', $cmd_exe, $run_cmd);
         $run_cmd = str_replace('%out%', $out_file, $run_cmd);
@@ -113,11 +113,11 @@ function train($source_dir = 'source/') {
 
         exec($run_cmd, $out, $return);
 
-        // ´ò¿ª·ÖÀàºóµÄÎÄ¼ş
+        // æ‰“å¼€åˆ†ç±»åçš„æ–‡ä»¶
         $content = file_get_contents($out_file);
         $content = explode("\n", $content);
         $arr = array();
-        // Ìø¹ıµÚÒ»ĞĞ
+        // è·³è¿‡ç¬¬ä¸€è¡Œ
         for ($i = 1, $l = count($content); $i < $l; $i++) {
             $line = explode(" ", trim($content[$i]));
             if (!$line[0]) {
@@ -125,7 +125,7 @@ function train($source_dir = 'source/') {
             }
             $arr[$line[0]] = $line[1];
         }
-        // ÅÅĞò½á¹û ÒÔ¼° ¼òµ¥¼ÆËãÃ¿¸ö´ÊµÄ·ÖÀà
+        // æ’åºç»“æœ ä»¥åŠ ç®€å•è®¡ç®—æ¯ä¸ªè¯çš„åˆ†ç±»
         $arr = array_keys($arr);
         $cnt = 10000;
         $num = 0;
@@ -137,13 +137,13 @@ function train($source_dir = 'source/') {
             $score = round(max($cnt - $num * 1.3, 5), 3);
             $new_arr[] = $v . ' ' . $score . ' ';
             $num++;
-            //ÉèÖÃÉÏÏŞ
+            //è®¾ç½®ä¸Šé™
             if ($num > $cnt) {
                 break;
             }
         }
 
-        // ½«´ÊºÍ·ÖÊıĞ´Èë½á¹ûÎÄ¼ş
+        // å°†è¯å’Œåˆ†æ•°å†™å…¥ç»“æœæ–‡ä»¶
         $fp = fopen($out_file, 'w+');
         fputs($fp, trim(implode("", $new_arr)));
         fclose($fp);
@@ -154,18 +154,18 @@ function train($source_dir = 'source/') {
 
 /**
  *
- * ·ÖÀà¹ı³Ì
+ * åˆ†ç±»è¿‡ç¨‹
  *
- * @param string $source_target Ä¿±êÒªÊ¶±ğµÄÄÚÈİ
- * @param string $source_data   ¶à¸öÑµÁ·¼¯±£´æÄ¿Â¼(Ã¿¸ö×ÓÄ¿Â¼Ò»¸ö·ÖÀà,×ÓÄ¿Â¼´ú±íÒª·µ»Ø½á¹ûÏÂ±ê)
+ * @param string $source_target ç›®æ ‡è¦è¯†åˆ«çš„å†…å®¹
+ * @param string $source_data   å¤šä¸ªè®­ç»ƒé›†ä¿å­˜ç›®å½•(æ¯ä¸ªå­ç›®å½•ä¸€ä¸ªåˆ†ç±»,å­ç›®å½•ä»£è¡¨è¦è¿”å›ç»“æœä¸‹æ ‡)
  */
 function analysis($source_target = 'source_target/', $source_data = 'source_data/') {
-    // È¡µÃĞèÒª¼ÓÔØµÄÑµÁ·¼¯ÎÄ¼ş
+    // å–å¾—éœ€è¦åŠ è½½çš„è®­ç»ƒé›†æ–‡ä»¶
     $cate_types = array_diff(scandir($source_data), array('..', '.'));
     $cate_datas = array();
 
     foreach ($cate_types as $cate_type) {
-        // °´·ÖÀà¼ÓÔØÃ¿Ò»¸öÑµÁ·¼¯
+        // æŒ‰åˆ†ç±»åŠ è½½æ¯ä¸€ä¸ªè®­ç»ƒé›†
         $source_path = $source_data . $cate_type . '/';
         $cate_files = array_diff(scandir($source_path), array('..', '.'));
         $cate_count = 0;
@@ -182,7 +182,7 @@ function analysis($source_target = 'source_target/', $source_data = 'source_data
             $cate_count++;
         }
     }
-    // ¶ÁÈ¡ËùÓĞĞèÒªÑµÁ·µÄÊı¾İ
+    // è¯»å–æ‰€æœ‰éœ€è¦è®­ç»ƒçš„æ•°æ®
     $target_files = array_diff(scandir($source_target), array('..', '.'));
     foreach ($target_files as $target) {
         $lines = file($source_target . $target);
@@ -190,7 +190,7 @@ function analysis($source_target = 'source_target/', $source_data = 'source_data
         $count = count($lines);
         $content = '';
 
-        // ********* ÕâÀïÊÓ¾ßÌåÒµÎñ¶ø¶¨£¬ÎÒÃÇµ±Ç°Ê¶±ğµÄÊÇĞ¡Ëµ¹ÅÏÖ´ú£¬ËùÒÔÈ¡Ç°ºó500ĞĞÀ´Ê¶±ğ£¬¹»ÁË ********
+        // ********* è¿™é‡Œè§†å…·ä½“ä¸šåŠ¡è€Œå®šï¼Œæˆ‘ä»¬å½“å‰è¯†åˆ«çš„æ˜¯å°è¯´å¤ç°ä»£ï¼Œæ‰€ä»¥å–å‰å500è¡Œæ¥è¯†åˆ«ï¼Œå¤Ÿäº† ********
         $min_len = 500;
         for ($i = 0; $i < min($min_len, $count); $i++) {
             $content .= encoding::iconv($lines[$i]);
@@ -202,10 +202,10 @@ function analysis($source_target = 'source_target/', $source_data = 'source_data
             }
         }
 
-        // ¹ıÂË´ÊĞÔ£¬µÃµ½¹Ç¸É´Ê
+        // è¿‡æ»¤è¯æ€§ï¼Œå¾—åˆ°éª¨å¹²è¯
         $tags = get_trans_data($content);
 
-        // ¼òµ¥µÄ¼ÆËã·ÖÊı
+        // ç®€å•çš„è®¡ç®—åˆ†æ•°
         $match_cates = array();
         foreach ($cate_datas as $cate_type => $trains_datas) {
             $max_score = 0;
@@ -223,7 +223,7 @@ function analysis($source_target = 'source_target/', $source_data = 'source_data
             }
             $match_cates[$cate_type] = $max_cate;
         }
-        // ´òÓ¡³ö½á¹û
+        // æ‰“å°å‡ºç»“æœ
         l('Match', $match_cates, $target);
     }
 
